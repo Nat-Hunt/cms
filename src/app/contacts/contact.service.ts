@@ -17,12 +17,12 @@ export class ContactService {
     return this.contacts.slice();
    }
 
-  getContact(id: string): Contact | null {
+  getContact(id: string): Contact {
     for (let contact of this.contacts) {
       if (contact.id === id) {
         return contact
       }
     }
-    return null
+    return null!;
    }
 }
