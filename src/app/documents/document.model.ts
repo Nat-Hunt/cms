@@ -1,11 +1,11 @@
 export class Document {
-    public id: number;
+    public id: string;
     public name: string;
     public description: string;
     public url: string;
-    public children: Document[];
+    public children: Document[] | null;
 
-    constructor(id: number, name: string, description: string, url: string, children: Document[]){
+    constructor(id: string, name: string, description: string, url: string, children: Document[]| null){
         this.id = id;
         this.name = name;
         this.description = description;
