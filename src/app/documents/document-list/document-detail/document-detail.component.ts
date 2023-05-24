@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Document } from '../../document.model';
 import { DocumentService } from '../../document.service';
+import { WindRefService } from 'src/app/wind-ref.service';
 
 @Component({
   selector: 'cms-document-detail',
@@ -10,12 +11,22 @@ import { DocumentService } from '../../document.service';
   styleUrls: ['./document-detail.component.css']
 })
 export class DocumentDetailComponent implements OnInit{
-  document: Document
-  id: string
+  document: Document;
+  id: string;
+  nativeWindow: any;
 
   constructor(private documentService: DocumentService, 
     private route: ActivatedRoute, 
-    private router: Router) {}
+    private router: Router,
+    private windowRefService: WindRefService) {
+      this.nativeWindow = windowRefService.getNativeWindowMethod();
+    }
+
+  onView() {
+    if (this.document.url) {
+      this.nativeWindow.open(this.document.url);
+    }
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(

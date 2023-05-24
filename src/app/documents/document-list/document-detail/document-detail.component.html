@@ -3,7 +3,7 @@
     <div class="row pad-all">
       <h4 class="title margin-left-right">{{ document.name }}</h4>
       <div class="row pull-right margin-left-right">
-        <a routerLink="" style="cursor: pointer" class="btn btn-primary"
+        <a (click)="onView()" style="cursor: pointer" class="btn btn-primary"
           >View</a
         >
         <a [routerLink]="['edit']" style="cursor: pointer" class="btn btn-info"
