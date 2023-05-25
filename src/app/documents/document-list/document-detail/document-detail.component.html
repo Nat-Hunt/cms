@@ -9,7 +9,7 @@
         <a [routerLink]="['edit']" style="cursor: pointer" class="btn btn-info"
           >Edit</a
         >
-        <a routerLink="" style="cursor: pointer" class="btn btn-danger"
+        <a (click)="onDelete()" style="cursor: pointer" class="btn btn-danger"
           >Delete</a
         >
       </div>

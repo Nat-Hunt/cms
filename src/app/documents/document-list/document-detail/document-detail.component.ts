@@ -28,6 +28,11 @@ export class DocumentDetailComponent implements OnInit{
     }
   }
 
+  onDelete() {
+    this.documentService.deleteDocument(this.document);
+    this.router.navigate(['documents'])
+  }
+
   ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => {
