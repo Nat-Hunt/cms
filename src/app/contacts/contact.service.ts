@@ -17,9 +17,9 @@ export class ContactService {
   constructor() {
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();
-   }
+  }
 
-   getMaxId(): number {
+  getMaxId(): number {
      let maxId = 0;
  
      for (let contact of this.contacts) {
@@ -30,12 +30,12 @@ export class ContactService {
      }
  
      return maxId;
-   }
+  }
   
 
   getContacts(): Contact[] {
     return this.contacts.slice();
-   }
+  }
 
   getContact(id: string): Contact {
     for (let contact of this.contacts) {
@@ -44,9 +44,9 @@ export class ContactService {
       }
     }
     return null!;
-   }
+  }
 
-   deleteContact(contact: Contact) {
+  deleteContact(contact: Contact) {
     if (!contact) {
       return;
     }
