@@ -20,6 +20,8 @@ import { DocumentEditComponent } from './documents/document-edit/document-edit.c
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { DndModule } from 'ng2-dnd';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DndModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
