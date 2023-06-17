@@ -56,7 +56,7 @@ export class ContactService {
           this.contacts = contacts;
           this.maxContactId = this.getMaxId();
 
-          contacts.sort((a, b)=> {
+          this.contacts.sort((a, b)=> {
             if (a.name > b.name) {
               return 1;
             } else {
