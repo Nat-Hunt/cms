@@ -54,7 +54,7 @@ export class MessageService {
           this.maxMessageId = this.getMaxId();
 
           this.messages.sort((a, b)=> {
-            if (a.id > b.id) {
+            if (+a.id > +b.id) {
               return 1;
             } else {
               return -1;
