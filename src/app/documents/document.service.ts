@@ -56,7 +56,7 @@ export class DocumentService {
           this.documents = documents;
           this.maxDocumentId = this.getMaxId();
           
-          documents.sort((a, b)=> {
+          this.documents.sort((a, b)=> {
             if (a.name > b.name) {
               return 1;
             } else {
