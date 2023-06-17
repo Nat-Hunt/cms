@@ -2,19 +2,23 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
-  private documents: Document[];
+  private documentDatabaseUrl: string = 'https://wdd430-cms-4efbe-default-rtdb.firebaseio.com/documents.json';
+  private documents: Document[] = [];
   maxDocumentId: number;
 
   documentSelectedEvent = new EventEmitter<Document>();
   documentChangedEvent = new EventEmitter<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
 
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
     this.documents = MOCKDOCUMENTS;
     this.maxDocumentId = this.getMaxId();
   }
@@ -32,8 +36,54 @@ export class DocumentService {
     return maxId;
   }
 
-  getDocuments(): Document[] {
-    return this.documents.slice()
+  loadDocuments() {
+    this.http
+      .get<Document[]>(this.documentDatabaseUrl)
+      .subscribe(
+        (documents: Document[]) => {
+          this.documents = documents;
+          this.maxDocumentId = this.getMaxId();
+          
+          documents.sort((a, b)=> {
+            if (a.name > b.name) {
+              return 1;
+            } else {
+              return -1
+            }
+          })
+          
+          let documentsListClone = this.documents.slice();
+          this.documentListChangedEvent.next(documentsListClone);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getDocuments() {
+    this.http
+      .get<Document[]>(this.documentDatabaseUrl)
+      .subscribe(
+        (documents: Document[]) => {
+          this.documents = documents;
+          this.maxDocumentId = this.getMaxId();
+          
+          documents.sort((a, b)=> {
+            if (a.name > b.name) {
+              return 1;
+            } else {
+              return -1
+            }
+          })
+          
+          let documentsListClone = this.documents.slice();
+          this.documentListChangedEvent.next(documentsListClone);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   getDocument(id: string): Document {
