@@ -21,6 +21,7 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DndModule } from 'ng2-dnd';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DndModule } from 'ng2-dnd';
     MessageEditComponent,
     DropdownDirective,
     DocumentEditComponent,
-    ContactEditComponent
+    ContactEditComponent,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,

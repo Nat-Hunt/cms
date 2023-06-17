@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit, OnDestroy {
+  term: string;
   contacts: Contact[] = [];
   subscription: Subscription;
 
@@ -29,5 +30,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   onSelected(contact: Contact){
     this.contactService.contactSelectedEvent.emit(contact);
+  }
+
+  search(value: string) {
+    this.term = value;
   }
 }
