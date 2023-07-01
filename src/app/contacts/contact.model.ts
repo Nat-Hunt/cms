@@ -1,4 +1,7 @@
+import { ObjectId } from "mongoose";
+
 export class Contact {
+    public _id: ObjectId;
     public id: string; 
     public name: string; 
     public email: string; 

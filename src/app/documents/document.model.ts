@@ -1,4 +1,7 @@
+import { ObjectId } from "mongoose";
+
 export class Document {
+    public _id: ObjectId;
     public id: string;
     public name: string;
     public description: string;

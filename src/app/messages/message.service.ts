@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MessageService {
-  private messageDatabaseUrl: string = 'https://wdd430-cms-4efbe-default-rtdb.firebaseio.com/messages.json';
+  private messageDatabaseUrl: string = 'https://localhost:3000/messages';
   private messages: Message[];
   messageChangedEvent = new EventEmitter<Message[]>();
   messageListChangedEvent = new Subject<Message[]>();
@@ -79,8 +79,17 @@ export class MessageService {
   }
 
   addMessage(message: Message) {
-    this.messages.push(message);
-    this.storeMessages();
+    if (!message) {
+      return
+    }
+
+    message.id = "";
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    this.http.post<{message: string, document: Message }>(this.messageDatabaseUrl, message, {headers: headers}).subscribe((responseData)=> {
+      this.messages.push(responseData.document);
+      this.storeMessages();
+    })
   }
 
 }

@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ContactService {
-  private contactDatabaseUrl: string = 'https://wdd430-cms-4efbe-default-rtdb.firebaseio.com/contacts.json';
+  private contactDatabaseUrl: string = 'https://localhost:3000/contacts';
   contacts: Contact[] = [];
   maxContactId: number;
 
@@ -87,13 +87,15 @@ export class ContactService {
       return;
     }
 
-    const pos = this.contacts.indexOf(contact);
+    const pos = this.contacts.findIndex(c => c.id === contact.id);
     if (pos < 0) {
       return;
     }
 
-    this.contacts.splice(pos, 1);
-    this.storeContacts();
+    this.http.delete(`${this.contactDatabaseUrl}/${contact.id}`).subscribe(()=> {
+      this.contacts.splice(pos, 1);
+      this.storeContacts();
+    })
   }
 
 
@@ -102,10 +104,13 @@ export class ContactService {
       return
     }
 
-    this.maxContactId ++
-    newContact.id = "" + this.maxContactId;
-    this.contacts.push(newContact);
-    this.storeContacts();
+    newContact.id = "";
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    this.http.post<{message: string, contact: Contact}>(this.contactDatabaseUrl, newContact, {headers: headers}).subscribe((responseData)=>{
+      this.contacts.push(responseData.contact);
+      this.storeContacts();
+    })
   }
 
   updateContact(originalContact: Contact, newContact: Contact) {
@@ -113,14 +118,19 @@ export class ContactService {
       return;
     }
 
-    let pos = this.contacts.indexOf(originalContact);
+    const pos = this.contacts.findIndex(c => c.id === originalContact.id);
     if (pos < 0) {
       return;
     }
 
     newContact.id = originalContact.id;
-    this.contacts[pos] = newContact;
-    this.storeContacts();
+    newContact._id = originalContact._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    this.http.put(`${this.contactDatabaseUrl}/${originalContact.id}`, newContact, {headers: headers}).subscribe(()=> {
+      this.contacts[pos] = newContact;
+      this.storeContacts();
+    })
   }
 
 }
